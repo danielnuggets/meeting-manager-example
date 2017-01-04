@@ -1,0 +1,46 @@
+<h2>Create a new meeting</h2>
+
+<% if @meeting.errors.any? %>
+  <div id="error_explanation">
+    <h4><%= pluralize(@meeting.errors.count, "error") %> prohibited this meeting from being saved:</h4>
+ 
+    <ul>
+    <% @meeting.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_tag '/meetings', method: :post do %>
+  <div>
+    <%= label_tag :name %>
+    <%= text_field_tag :name, @meeting.name %>
+  </div>
+  <div>
+    <%= label_tag :address %>
+    <%= text_field_tag :address, @meeting.address %>
+  </div>
+  <div>
+    <%= label_tag :start_time %>
+    <% if @meeting.start_time %>
+      <%= datetime_local_field_tag :start_time, @meeting.start_time.strftime("%Y-%m-%dT%H:%M")%>
+    <% else %>
+      <%= datetime_local_field_tag :start_time %>
+    <% end %>
+  </div>
+  <div>
+    <%= label_tag :end_time %>
+    <% if @meeting.end_time %>
+      <%= datetime_local_field_tag :end_time, @meeting.end_time.strftime("%Y-%m-%dT%H:%M")%>
+    <% else %>
+      <%= datetime_local_field_tag :end_time %>
+    <% end %>
+  </div>
+    <%= label_tag :notes %>
+    <%= text_area_tag :notes%>
+  </div>
+  <div>
+    <%= submit_tag 'Submit' %>
+  </div>
+<% end %>
